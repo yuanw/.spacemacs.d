@@ -33,32 +33,31 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
-     html
-     shell-scripts
+   '(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-     ;; better-defaults
+     better-defaults
+     csv
+     yaml
+     html
+     ;shell-scripts
      emacs-lisp
      git
-     ;;python
      helm
      (latex :variables
             latex-enable-auto-fill t)
-
-     ;; markdown
      lsp
      multiple-cursors
      (haskell :variables
               haskell-completion-backend 'lsp)
      (org :variables org-enable-github-support t)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom)
      ;;spell-checking
      syntax-checking
      treemacs
@@ -79,10 +78,11 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
-      (lsp-haskell :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
-      nix-mode
-      direnv
-      lsp-python-ms
+                                      (lsp-haskell :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
+                                      dracula-theme
+                                      nix-mode
+                                      direnv
+                                      lsp-python-ms
  )
 
    ;; A list of packages that cannot be updated.
@@ -474,7 +474,8 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired nil))
 )
 
 
@@ -504,7 +505,7 @@ before packages are loaded."
 
   (require 'dired-x)
   (setq-default dired-omit-files-p t) ; Buffer-local variable
- )
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -526,13 +527,13 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/.notable/org-notes/haskell.org")))
  '(package-selected-packages
    (quote
-    (lsp-python-ms ox-gfm direnv nix-mode yaml-mode seti-theme git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct diff-hl browse-at-remote auto-dictionary web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags company-shell yapfify smeargle pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements magit-svn magit-popup python live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor cython-mode company-anaconda blacken anaconda-mode pythonic yasnippet-snippets intero helm-company helm-c-yasnippet fuzzy dante lcr company-statistics company-lsp company-ghci company-ghc company-cabal company auto-yasnippet ac-ispell auto-complete lsp-ui lsp-treemacs lsp-haskell hlint-refactor hindent helm-lsp lsp-mode markdown-mode dash-functional helm-hoogle haskell-snippets yasnippet ghc haskell-mode cmm-mode ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+    (csv-mode lsp-python-ms ox-gfm direnv nix-mode yaml-mode seti-theme git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct diff-hl browse-at-remote auto-dictionary web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags company-shell yapfify smeargle pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements magit-svn magit-popup python live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor cython-mode company-anaconda blacken anaconda-mode pythonic yasnippet-snippets intero helm-company helm-c-yasnippet fuzzy dante lcr company-statistics company-lsp company-ghci company-ghc company-cabal company auto-yasnippet ac-ispell auto-complete lsp-ui lsp-treemacs lsp-haskell hlint-refactor hindent helm-lsp lsp-mode markdown-mode dash-functional helm-hoogle haskell-snippets yasnippet ghc haskell-mode cmm-mode ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "MesloLGS NF" :foundry "nil" :slant normal :weight normal :height 220 :width normal)))))
+ )
 )
 
