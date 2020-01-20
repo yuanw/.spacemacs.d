@@ -51,7 +51,8 @@ This function should only modify configuration layer settings."
              python-pipenv-activate t
              )
      yaml
-     helm
+     ivy
+     ;helm
      ;; markdown
      lsp
      multiple-cursors
@@ -527,10 +528,10 @@ before packages are loaded."
                                 (setq flycheck-checker 'flake8)))
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   (setq TeX-engine 'xetex)
-  (setq org-directory "/Users/yuanwang/.notable/org-notes")
+  (setq org-directory "/Users/yuan/.notable/org-notes")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-agenda-files (quote ("/Users/yuanwang/daily_logs"
-                                 "/Users/yuanwang/.notable/org-notes")))
+  (setq org-agenda-files (quote ("/Users/yuan/daily_logs"
+                                 "/Users/yuan/.notable/org-notes")))
   (with-eval-after-load 'treemacs
     (add-to-list 'treemacs-pre-file-insert-predicates
                  #'treemacs-is-file-git-ignored?))
@@ -608,6 +609,10 @@ before packages are loaded."
     ;;    'spacemacs-light
     ;;    '(ivy-posframe-border ((t (:inherit default))))))
     )
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((dot . t))) ; this line activates dot
 
   (ivy-posframe-mode 1)
 
