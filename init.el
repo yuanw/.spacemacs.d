@@ -33,7 +33,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(javascript
+   '(purescript
+     idris
+     javascript
      go
      html
      ;; ----------------------------------------------------------------
@@ -44,11 +46,11 @@ This function should only modify configuration layer settings."
      auto-completion
      better-defaults
      emacs-lisp
+     evil-commentary
      git
      (python :variables
              python-backend 'lsp
              python-lsp-server 'mspyls
-             python-pipenv-activate t
              )
      yaml
      ivy
@@ -71,6 +73,7 @@ This function should only modify configuration layer settings."
       :variables treemacs-use-filewatch-mode t
       :variables treemacs-use-git-mode 'deferred)
      version-control
+     org-roam
      (java :variables java-backend 'lsp)
      )
 
@@ -89,7 +92,6 @@ This function should only modify configuration layer settings."
                                       org-plus-contrib
                                       lsp-python-ms
                                       ivy-posframe
-                                      (lsp-haskell :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
    )
 
    ;; A list of packages that cannot be updated.
@@ -513,11 +515,10 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq lsp-haskell-process-path-hie "hie-wrapper")
+  ;;(setq lsp-haskell-process-path-hie "hie-wrapper")
   (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
-  (require 'lsp-haskell)
   (require 'lsp-python-ms)
-  (add-hook 'haskell-mode-hook #'lsp)
+  ;;(add-hook 'haskell-mode-hook #'lsp)
   (add-hook 'dart-mode-hook #'lsp)
   (custom-set-variables
    '(haskell-stylish-on-save t))
@@ -643,11 +644,11 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(global-display-line-numbers-mode t)
- '(haskell-stylish-on-save t)
+ '(haskell-stylish-on-save t t)
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (ansi package-build shut-up epl git commander f dash s tern nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl xterm-color vterm terminal-here shell-pop reveal-in-osx-finder osx-trash osx-dictionary osx-clipboard multi-term launchctl exec-path-from-shell eshell-z eshell-prompt-extras esh-help helm-gtags godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc ggtags flycheck-golangci-lint counsel-gtags company-go go-mode mvn meghanada maven-test-mode lsp-java groovy-mode groovy-imports pcache gradle-mode actionscript-mode flutter dart-server dart-mode confluence xml-rpc ox-jira jira-markup-mode dhall-mode reformatter ox-gfm web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode prettier-js impatient-mode simple-httpd helm-css-scss haml-mode emmet-mode counsel-css counsel swiper ivy company-web web-completion-data add-node-modules-path yaml-mode nix-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter dracula-theme diff-hl browse-at-remote yapfify smeargle pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements magit-svn magit-popup python live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gitignore helm-git-grep gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor cython-mode company-anaconda blacken anaconda-mode pythonic yasnippet-snippets intero helm-company helm-c-yasnippet fuzzy dante lcr company-statistics company-lsp company-ghci company-ghc company-cabal company auto-yasnippet ac-ispell auto-complete lsp-ui lsp-treemacs lsp-haskell hlint-refactor hindent helm-lsp lsp-mode markdown-mode dash-functional helm-hoogle haskell-snippets yasnippet ghc haskell-mode cmm-mode ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+    (add-node-modules-path yaml-mode ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit spaceline powerline smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode psci purescript-mode psc-ide dash-functional popwin persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-mime org-download org-bullets open-junk-file nix-sandbox neotree move-text magit-gitflow magit-popup macrostep lorem-ipsum linum-relative link-hint intero flycheck insert-shebang indent-guide hydra lv hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-hoogle helm-gitignore request helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets haml-mode google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy flx-ido flx fish-mode fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit transient git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu emmet-mode elisp-slime-nav dumb-jump f s direnv diminish define-word company-web web-completion-data company-statistics company-shell dash company-ghci company-ghc ghc haskell-mode company-cabal company column-enforce-mode cmm-mode clean-aindent-mode bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
